@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import "./AddRov.css"
 import Form from 'react-bootstrap/Form';
 import Navbar from '../components/Navbar';
-
+import Particle from '../components/Particle';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import ParticlesBackground from '../components/Particle';
 export default function AddRov() {
   const [formValues, setFormValues] = useState({
     serialRov: "",
@@ -17,59 +18,58 @@ export default function AddRov() {
       [name]: value,
     });
 
-<<<<<<< HEAD
-=======
-    // Resetea el estado de error cuando el usuario cambia la contraseña
-  
->>>>>>> main
   }
-   //nombre:ID CONTRASEÑA:
+  //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
     e.preventDefault();
-    try{
+    try {
       const response = await axios.post(
         "http://localhost:3000/crearRov",
         formValues
       );
       console.log("rov creado")
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
   console.log(formValues)
   return (
-    <div className="container-addRov">
-      <Navbar/>
-      <div className="label">
-      <h2 className="text-wrapper">Agregar id rov</h2>
-    </div>
-    <div className="div">
-      <Form.Control  className="input"           type="text"
-          name="serialRov"
-          value={formValues.serialRov}
-          onChange={handleChangeInput} placeholder="Ejemplo: 001" />
-    </div>
+    <div className="containergeneraladd">
+    <Particle />
+      <div className="container-addRov">
+        <Navbar />
+        <div className="label">
+          <h2 className="text-wrapper">Agregar id rov</h2>
+        </div>
+        <div className="div">
+          <Form.Control className="input" type="text"
+            name="serialRov"
+            value={formValues.serialRov}
+            onChange={handleChangeInput} placeholder="Ejemplo: 001" />
+        </div>
 
-          <h2 className="text-wrapper">Elija un tipo de estado</h2>
+        <h2 className="text-wrapper">Elija un tipo de estado</h2>
 
         <Form.Group className=''>
-        <Form.Select
-          name="tipoEstado"
-          value={formValues.tipoEstado}
-          onChange={handleChangeInput}>
-        <option value="Disponible">Disponible</option>
+          <Form.Select
+            name="tipoEstado"
+            value={formValues.tipoEstado}
+            onChange={handleChangeInput}>
+            <option value="Disponible">Disponible</option>
 
-        <option value="En mantención">En mantención</option>
+            <option value="En mantención">En mantención</option>
 
-        <option value="En mantención">En baja</option>
+            <option value="En mantención">En baja</option>
 
-        <option value="En mantención">Pendiente</option>
-        </Form.Select>
-      </Form.Group>
+            <option value="En mantención">Pendiente</option>
+          </Form.Select>
+        </Form.Group>
 
 
         <Button variant="primary" onClick={handleSubmit}>Agregar</Button>
-    </div>
+      </div>
+      </div>
+
   )
 }
