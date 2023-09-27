@@ -1,34 +1,72 @@
-import React from 'react'
+import React,{useState} from 'react'
 import "./AddRov.css"
 import Form from 'react-bootstrap/Form';
 import Navbar from '../components/Navbar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Button from 'react-bootstrap/Button';
 export default function AddRov() {
-  return (
-    <div className="index">
-      <Navbar/>
-    <div className="div">
-<Form.Control className="input" placeholder="Ejemplo: 001" />
-      <div className="text-wrapper">Agregar id rov</div>
-      <p className="p">Elija un tipo de estado</p>
-      <button className="button">
-        <button className="button-2">Agregar</button>
-      </button>
-      <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-        Dropdown Button
-      </Dropdown.Toggle>
+  const [formValues, setFormValues] = useState({
+    serialRov: "",
+    tipoEstado: "",
+  });
+  function handleChangeInput(e) {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
 
-      <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+    // Resetea el estado de error cuando el usuario cambia la contraseña
+    setPasswordError("");
+  }
+   //nombre:ID CONTRASEÑA:
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try{
+      const response = await axios.post(
+        "http://localhost:3000/crearRov",
+        formValues
+      );
+      console.log("rov creado")
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+  console.log(formValues)
+  return (
+    <div className="container-addRov">
+      <Navbar/>
+      <div className="label">
+      <h2 className="text-wrapper">Agregar id rov</h2>
+    </div>
+    <div className="div">
+      <Form.Control  className="input"           type="text"
+          name="serialRov"
+          value={formValues.serialRov}
+          onChange={handleChangeInput} placeholder="Ejemplo: 001" />
     </div>
 
+          <h2 className="text-wrapper">Elija un tipo de estado</h2>
 
-  </div>
+        <Form.Group className=''>
+        <Form.Select
+          name="tipoEstado"
+          value={formValues.tipoEstado}
+          onChange={handleChangeInput}>
+        <option value="Disponible">Disponible</option>
+
+        <option value="En mantención">En mantención</option>
+
+        <option value="En mantención">En baja</option>
+
+        <option value="En mantención">Pendiente</option>
+        </Form.Select>
+      </Form.Group>
+
+
+        <Button variant="primary" onClick={handleSubmit}>Agregar</Button>
+    </div>
   )
 }
