@@ -12,7 +12,7 @@ import AddRov from "./pages/addRov.jsx"
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AddRov />
+    element: <Home />
   },
   {
     path: "/admin",
