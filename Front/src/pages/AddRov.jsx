@@ -17,8 +17,6 @@ export default function AddRov() {
       [name]: value,
     });
 
-    // Resetea el estado de error cuando el usuario cambia la contraseña
-    setPasswordError("");
   }
    //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
