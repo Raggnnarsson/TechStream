@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const con = require("../dbConnection");
+
 // Define rutas para productos
 router.get("/", (req, res) => {
     const sql = `SELECT

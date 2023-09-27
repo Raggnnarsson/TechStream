@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const con = require("../dbConnection");
+const jwt = require('jsonwebtoken');
+
 // Define rutas para productos
 router.post("/", (req, res) => {
   const { nombre, pass } = req.body;
