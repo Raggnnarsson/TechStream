@@ -1,14 +1,14 @@
-import React,{useState} from 'react'
+import {useState} from 'react'
 import "./AddRov.css"
 import Form from 'react-bootstrap/Form';
 import Navbar from '../components/Navbar';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+
 import Button from 'react-bootstrap/Button';
+import axios from "axios";
 export default function AddRov() {
   const [formValues, setFormValues] = useState({
     serialRov: "",
-    tipoEstado: "",
+    tipoEstado: "Disponible",
   });
   function handleChangeInput(e) {
     const { name, value } = e.target;
@@ -17,6 +17,11 @@ export default function AddRov() {
       [name]: value,
     });
 
+<<<<<<< HEAD
+=======
+    // Resetea el estado de error cuando el usuario cambia la contraseña
+  
+>>>>>>> main
   }
    //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
