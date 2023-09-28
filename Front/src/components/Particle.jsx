@@ -21,7 +21,7 @@ const Particle = () => {
         <Particles id="tsparticles"  init={particlesInit} loaded={particlesLoaded} options={{
             background: {
                 color: {
-                    value: "#0d47a1",
+                    value: "#0211FF",
                 },
             },
             fpsLimit: 120,
@@ -49,10 +49,10 @@ const Particle = () => {
             },
             particles: {
                 color: {
-                    value: "#ffffff",
+                    value: "#FDFDFD",
                 },
                 links: {
-                    color: "#ffffff",
+                    color: "#FDFDFD",
                     distance: 150,
                     enable: true,
                     opacity: 0.5,

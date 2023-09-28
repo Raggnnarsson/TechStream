@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import "./AddRov.css"
-import Form from 'react-bootstrap/Form';
-import Navbar from '../components/Navbar';
-import Particle from '../components/Particle';
-import Button from 'react-bootstrap/Button';
+import { useState } from "react";
+import "./AddRov.css";
+import Form from "react-bootstrap/Form";
+import Navbar from "../components/Navbar";
+import Particle from "../components/Particle";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
-import ParticlesBackground from '../components/Particle';
+import ParticlesBackground from "../components/Particle";
 export default function AddRov() {
   const [formValues, setFormValues] = useState({
     serialRov: "",
@@ -17,7 +17,6 @@ export default function AddRov() {
       ...formValues,
       [name]: value,
     });
-
   }
   //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
@@ -27,49 +26,58 @@ export default function AddRov() {
         "http://localhost:3000/crearRov",
         formValues
       );
-      console.log("rov creado")
-    }
-    catch (err) {
-      console.log(err)
+      console.log("rov creado");
+    } catch (err) {
+      console.log(err);
     }
   }
-  console.log(formValues)
+  console.log(formValues);
   return (
     <div className="containergeneraladd">
-    <Particle />
+      <Particle />
       <div className="container-addRov">
         <Navbar />
-        <div className="label">
-          <h2 className="text-wrapper">Agregar id rov</h2>
+        <div className="card">
+          <div className="card-body">
+            <div className="label">
+              <h2 className="text-wrapper text-center">Agregar Rov</h2>
+            </div>
+            <Form>
+              <Form.Group className="">
+                <h4 className="text-wrapper text-center">Ingrese serial del rov</h4>
+                <Form.Control
+                  className="input"
+                  type="text"
+                  name="serialRov"
+                  value={formValues.serialRov}
+                  onChange={handleChangeInput}
+                  placeholder="Ejemplo: 001"
+                />
+              </Form.Group>
+
+              <h4 className="text-wrapper pt-2">Tipo de estado</h4>
+
+              <Form.Group className="">
+                <Form.Select
+                  name="tipoEstado"
+                  value={formValues.tipoEstado}
+                  onChange={handleChangeInput}
+                >
+                  <option value="Disponible">Disponible</option>
+                  <option value="En mantención">En mantención</option>
+                  <option value="En baja">En baja</option>
+                  <option value="Pendiente">Pendiente</option>
+                </Form.Select>
+              </Form.Group>
+              <div className="button pt-4">
+              <Button variant="primary" onClick={handleSubmit}>
+                Agregar
+              </Button>
+              </div>
+            </Form>
+          </div>
         </div>
-        <div className="div">
-          <Form.Control className="input" type="text"
-            name="serialRov"
-            value={formValues.serialRov}
-            onChange={handleChangeInput} placeholder="Ejemplo: 001" />
-        </div>
-
-        <h2 className="text-wrapper">Elija un tipo de estado</h2>
-
-        <Form.Group className=''>
-          <Form.Select
-            name="tipoEstado"
-            value={formValues.tipoEstado}
-            onChange={handleChangeInput}>
-            <option value="Disponible">Disponible</option>
-
-            <option value="En mantención">En mantención</option>
-
-            <option value="En mantención">En baja</option>
-
-            <option value="En mantención">Pendiente</option>
-          </Form.Select>
-        </Form.Group>
-
-
-        <Button variant="primary" onClick={handleSubmit}>Agregar</Button>
       </div>
-      </div>
-
-  )
+    </div>
+  );
 }
