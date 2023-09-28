@@ -9,10 +9,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { AuthProvider } from "react-auth-kit"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import AddRov from "./pages/addRov.jsx"
+import EditarRov from './pages/EditarRov'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />
+    element: <EditarRov />
   },
   {
     path: "/admin",

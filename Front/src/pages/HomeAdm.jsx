@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import ButtonModal from "../components/ButtonModal";
 import { useSignOut, useAuthUser } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Particle from "../components/Particle";
-import ParticlesBackground from "../components/Particle";
+import "./HomeAdm.css"
 function HomeAdm() {
   //instanciando funcion que nos elimina las cookies para desloguearnos
   const signOut = useSignOut();
@@ -34,6 +33,7 @@ function HomeAdm() {
     setLoading(false);
   }, []);
 
+ 
   if (loading) {
     return (
       <div className="bg-dark">
@@ -44,10 +44,10 @@ function HomeAdm() {
   }
   return (
     <>
+      <Navbar></Navbar>
       <div className="containergeneraladd">
-        <Particle />
-        <div className="bg-dark vh-full">
-          <Navbar></Navbar>
+        <Particle/>
+        <div className="position-absolute z-index-1000">
           <h1 className="pt-5 text-center text-primary">Reporte Rov</h1>
           <h1 className="text-light text-center">{auth().nombre} </h1>
           <motion.div
@@ -71,7 +71,7 @@ function HomeAdm() {
                     <th scope="col">Ubicación</th>
                     <th scope="col">Piloto</th>
                     <th scope="col">Fecha de ingreso</th>
-                    <th scope="col">Fecha de salida</th>
+                    <th scope="col">Editar</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -98,7 +98,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            {reporte.fechaSalida}
+                            <button >editar</button>
                           </td>
                         </tr>
                       </>
@@ -110,9 +110,6 @@ function HomeAdm() {
               </table>
             </div>
           </motion.div>
-          <div className="d-flex justify-content-center">
-            <ButtonModal />
-          </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -134,7 +131,7 @@ function HomeAdm() {
                     <th scope="col">Ubicación</th>
                     <th scope="col">Piloto</th>
                     <th scope="col">Fecha de ingreso</th>
-                    <th scope="col">Fecha de salida</th>
+                    <th scope="col">Editar</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -162,7 +159,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            {reporte.fechaSalida}
+                          <button >editar</button>
                           </td>
                         </tr>
                       </>
@@ -174,9 +171,6 @@ function HomeAdm() {
               </table>
             </div>
           </motion.div>
-          <div className="d-flex justify-content-center">
-            <ButtonModal />
-          </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -198,7 +192,7 @@ function HomeAdm() {
                     <th scope="col">Ubicación</th>
                     <th scope="col">Piloto</th>
                     <th scope="col">Fecha de ingreso</th>
-                    <th scope="col">Fecha de salida</th>
+                    <th scope="col">Editar</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -225,7 +219,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            {reporte.fechaSalida}
+                            <button>editar</button>
                           </td>
                         </tr>
                       </>
@@ -238,7 +232,6 @@ function HomeAdm() {
             </div>
           </motion.div>
           <div className="d-flex  justify-content-center">
-            <ButtonModal />
             <button className="btn btn-danger" onClick={logout}>
               Cerrar Sesión
             </button>

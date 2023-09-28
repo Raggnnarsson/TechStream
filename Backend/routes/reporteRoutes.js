@@ -29,6 +29,49 @@ router.get("/", (req, res) => {
       res.json(results);
     });
   });
+router.get("/:id",(req, res)=>{
+  const elementoId = req.params.id;
+  const sql = `SELECT * FROM Reportes WHERE idReporte = ${elementoId}`;
+con.query(sql, (error, results) => {
+  if (error) {
+    console.error("Error en la consulta:", error);
+    return res.status(500).json({ error: "Error al cargar datos" });
+  }
+
+  res.json(results);
+});
+});
+router.put('/editarReporte/:id', (req, res) => {
+  const reporteId = req.params.id;
+  const nuevosDatos = req.body; // Supongamos que quieres editar varios atributos
+
+  // Construir la consulta SQL dinámica
+  let sql = 'UPDATE Reportes SET ';
+  const valores = [];
+
+  for (const key in nuevosDatos) {
+    if (nuevosDatos.hasOwnProperty(key)) {
+      sql += `${key} = ?, `;
+      valores.push(nuevosDatos[key]);
+    }
+  }
+
+  // Eliminar la coma adicional y agregar la cláusula WHERE
+  sql = sql.slice(0, -2);
+  sql += ' WHERE idRov = ?';
+  valores.push(reporteId);
+
+  // Realizar la actualización en la base de datos
+  con.query(sql, valores, (err, result) => {
+    if (err) {
+      console.error('Error al editar los atributos:', err);
+      res.status(500).json({ error: 'Error al editar los atributos' });
+      return;
+    }
+    console.log(`Atributos del reporte con ID ${reporteId} editados correctamente`);
+    res.json({ mensaje: `Atributos del reporte con ID ${reporteId} editados correctamente` });
+  });
+});
 
 
 module.exports = router;

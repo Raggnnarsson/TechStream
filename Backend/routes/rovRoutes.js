@@ -30,5 +30,19 @@ router.post('/', (req, res) => {
     res.status(201).json({ message: 'Rov se ha creado con éxito' });
   });
 });
+router.get('/', (req, res) => {
+  // Consulta SQL para obtener todos los elementos de la tabla
+  const sql = 'SELECT * FROM Rov';
+
+  // Ejecutar la consulta SQL
+  con.query(sql, (err, resultados) => {
+    if (err) {
+      console.error('Error al obtener elementos de la tabla:', err);
+      res.status(500).json({ error: 'Error al obtener elementos de la tabla' });
+      return;
+    }
+    res.json(resultados);
+  });
+});
 
 module.exports = router;
