@@ -20,6 +20,20 @@
   .comentario-container h2 {
     margin-bottom: 10px; /* Espacio entre el título y el cuadro de texto (opcional) */
   }
+  .buttons-container {
+    display: flex; /* Para que los botones se alineen horizontalmente */
+    justify-content: space-between; /* Para que haya espacio entre los botones */
+    margin-top: 10px; /* Margen superior para separarlos de otros elementos si es necesario */
+  }
+  
+  .btn {
+    /* Estilos comunes para los botones */
+    padding: 10px 20px; /* Espaciado interno (ajústalo según tus preferencias) */
+  }
+  
+
+
+
   /* Estilo para el footer */
 .footer {
     height: 100px; /* Establece la altura que desees para el footer */

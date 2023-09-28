@@ -4,8 +4,8 @@ import { useSignOut, useAuthUser } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
-import Particle from "../components/Particle";
 import "./HomeAdm.css"
+import { Link } from "react-router-dom";
 function HomeAdm() {
   //instanciando funcion que nos elimina las cookies para desloguearnos
   const signOut = useSignOut();
@@ -45,10 +45,9 @@ function HomeAdm() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="containergeneraladd">
-        <Particle/>
-        <div className="position-absolute z-index-1000">
-          <h1 className="pt-5 text-center text-white">Reporte Rov</h1>
+      <div className="containergeneraladd pt-4">
+        <div className="position-flex">
+          <h1 className="pt-5 text-center text-dark">Reporte Rov</h1>
           <h2 className="text-light text-center">{auth().nombre} </h2>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -60,7 +59,7 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text">
-              <h3 className="text-white">Rovs disponibles</h3>
+              <h3 className="text-dark">Rovs disponibles</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
                   <tr>
@@ -97,7 +96,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            <button >editar</button>
+                            <Link to="/EditarRov" >editar</Link>
                           </td>
                         </tr>
                       </>
@@ -120,7 +119,7 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text">
-              <h3 className="text-white">Rovs pendientes o en mantención</h3>
+              <h3 className="text-dark">Rovs pendientes o en mantención</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
                   <tr>
@@ -158,7 +157,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                          <button >editar</button>
+                          <Link to="/EditarRov" >editar</Link>
                           </td>
                         </tr>
                       </>
@@ -181,7 +180,7 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text bg-dark">
-              <h3 className="text-white">Rovs en planta</h3>
+              <h3 className="text-dark">Rovs en planta</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
                   <tr>
@@ -218,7 +217,7 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            <button>editar</button>
+                          <Link to="/EditarRov" >editar</Link>
                           </td>
                         </tr>
                       </>
