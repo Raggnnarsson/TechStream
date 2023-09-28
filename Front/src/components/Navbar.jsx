@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top pb-20">
         <div className="contenedor-logo">
           <a className="navbar-brand" href="#">
             <img
@@ -41,7 +41,8 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item">Editar Rov</a>
+                    <Link className="dropdown-item" to="/EditarRov">
+                      Editar Rov</Link>
                   </li>
                 </ul>
               </div>
@@ -64,12 +65,7 @@ export default function Navbar() {
                   </li>
                   <li>
                     <a className="dropdown-item" href="#">
-                      Editar Rov
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Eliminar
+                      Eliminar Piloto
                     </a>
                   </li>
                 </ul>

@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { AuthProvider } from "react-auth-kit"
 import 'bootstrap/dist/js/bootstrap.bundle';
 import AddRov from "./pages/addRov.jsx"
+import EditarRov from './pages/EditarRov'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +26,12 @@ const router = createBrowserRouter([
     element:        <RequireAuth loginPath={'/'}>
     <AddRov />
   </RequireAuth>
-  
+  },
+  {
+    path: "/EditarRov",
+    element:        <RequireAuth loginPath={'/'}>
+    <EditarRov />
+  </RequireAuth>
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
