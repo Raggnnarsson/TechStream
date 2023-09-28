@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import "./HomeAdm.css"
 import { Link } from "react-router-dom";
+import EditarRov from "./EditarRov";
 function HomeAdm() {
   //instanciando funcion que nos elimina las cookies para desloguearnos
   const signOut = useSignOut();
@@ -17,6 +18,8 @@ function HomeAdm() {
   const [reportes, setReportes] = useState([]);
   //estado donde se guarda si los reportes de los reportes se cargaron o no
   const [loading, setLoading] = useState(true);
+  const [idReporte,setIdReporte]=useState("");
+  const [clickReporte,setClickReporte]=useState(false);
   //Funcion que desloguea y redirige
   const logout = () => {
     signOut();
@@ -42,6 +45,10 @@ function HomeAdm() {
       </div>
     );
   }
+  if(clickReporte){
+    return(<><EditarRov idReporte={idReporte}></EditarRov></>)
+  }
+  
   return (
     <>
       <Navbar></Navbar>
@@ -96,9 +103,9 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
-                            <Link to="/EditarRov" >editar</Link>
                           </td>
                         </tr>
+                            <button onClick={()=>{setIdReporte(reporte.idReporte);setClickReporte(true)}} >editar</button>
                       </>
                     ) : (
                       <></>

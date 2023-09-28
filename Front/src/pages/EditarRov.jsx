@@ -5,36 +5,34 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Navbar from "../components/Navbar";
 import "./EditarRov.css";
 
-function EditarRov() {
-  /*const [reporte, setReporte] = useState([]);
-  const [datos, setDatos] = useState([]);*/
+function EditarRov(props) {
+  const idReporte=props.idReporte;
   const [salmoneras, setSalmoneras] = useState([]);
   const [rovs, setRovs] = useState([]);
   const [pilotos, setPilotos] = useState([]);
   const [selectedIdRov, setSelectedIdRov] = useState("");
   const [selectedCentro, setSelectedCentro] = useState("");
   const [selectedPiloto, setSelectedPiloto] = useState("");
+  const [formValues,setFormValues]=useState({})
+  const [comentarioPiloto,setComentarioPiloto]=useState("");
+  const [comentarioTaller,setComentarioTaller]=useState("");
 
-  
+  function handleChangeInput(e) {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+    console.log(formValues);
+  }
 
   const handleGuardarClick = async () => {
-    // Capturar los valores de los comentarios
-    const comentarioPiloto = document.querySelector("#comentarioPiloto").value;
-    const comentarioTaller = document.querySelector("#comentarioTaller").value;
-
-    // Crear un objeto con los nuevos datos a enviar al servidor
-    const nuevosDatos = {
-      comentarioPiloto,
-      comentarioTaller,
-      centro: selectedCentro,
-      piloto: selectedPiloto,
-    };
-
+    
     try {
       // Enviar una solicitud PUT para editar los datos en el servidor
       const response = await axios.put(
-        `http://localhost:3000/reportes/editarReporte/${selectedIdRov}`,
-        nuevosDatos
+        `http://localhost:3000/reportes/editarReporte/${idReporte}`,
+        formValues
       );
 
       // Verificar si la edición fue exitosa
@@ -48,17 +46,6 @@ function EditarRov() {
     }
   };
 
-  const handleIdRovChange = (e) => {
-    setSelectedIdRov(e.target.value);
-  };
-
-  const handleCentroChange = (e) => {
-    setSelectedCentro(e.target.value);
-  };
-
-  const handlePilotoChange = (e) => {
-    setSelectedPiloto(e.target.value);
-  };
 
   const handleCancelarClick = () => {
     // Redirigir al usuario a la página de inicio
@@ -98,8 +85,8 @@ function EditarRov() {
               <Form.Group className="">
                 <Form.Select
                   name="idRov"
-                  value={selectedIdRov}
-                  onChange={handleIdRovChange}
+                  value={formValues.idRov}
+                  onChange={handleChangeInput}
                 >
                   {rovs.map((rov, index) => (
                     <option key={index} value={rov.idRov}>
@@ -112,9 +99,9 @@ function EditarRov() {
               <h2>Seleccione Centro</h2>
               <Form.Group className="">
                 <Form.Select
-                  name="centro"
-                  value={selectedCentro}
-                  onChange={handleCentroChange}
+                  name="idSalmonera"
+                  value={formValues.idSalmonera}
+                  onChange={handleChangeInput}
                 >
                   {salmoneras.map((salmonera, index) => (
                     <option key={index} value={salmonera.nombreSalmonera}>
@@ -127,9 +114,9 @@ function EditarRov() {
               <h2>Seleccione Piloto</h2>
               <Form.Group className="">
                 <Form.Select
-                  name="piloto"
-                  value={selectedPiloto}
-                  onChange={handlePilotoChange}
+                  name="idPiloto"
+                  value={formValues.idPiloto}
+                  onChange={handleChangeInput}
                 >
                   {pilotos.map((piloto, index) => (
                     <option key={index} value={piloto.nombre}>
@@ -141,12 +128,12 @@ function EditarRov() {
               <div className="comentario-container">
                 <h2>Comentario Piloto</h2>
                 <InputGroup>
-                  <Form.Control as="textarea" aria-label="With textarea" />
+                  <Form.Control name="comentarioPiloto" value={formValues.comentarioPiloto} as="textarea" aria-label="With textarea" />
                 </InputGroup>
 
                 <h2>Comentario Taller</h2>
                 <InputGroup>
-                  <Form.Control as="textarea" aria-label="With textarea" />
+                  <Form.Control name="comentarioTaller" value={formValues.comentarioTaller} as="textarea" aria-label="With textarea" />
                 </InputGroup>
               </div>
               <div className="buttons-container">
