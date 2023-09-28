@@ -1,0 +1,27 @@
+.containergeneraladd {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 20px;
+  }
+
+.comentario-container {
+    display: block;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto horizontalmente (opcional) */
+    max-width: 100%; /* Establece el ancho máximo para el contenedor de comentarios */
+    margin: 0 auto; /* Centra el contenedor en la página */
+  }
+  
+  /* Estilo adicional para los elementos de comentario si es necesario */
+  .comentario-container h2 {
+    margin-bottom: 10px; /* Espacio entre el título y el cuadro de texto (opcional) */
+  }
+  /* Estilo para el footer */
+.footer {
+    height: 100px; /* Establece la altura que desees para el footer */
+  }
+  

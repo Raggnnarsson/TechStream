@@ -13,7 +13,7 @@ import EditarRov from './pages/EditarRov'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <EditarRov />
+    element: <Home />
   },
   {
     path: "/admin",
@@ -26,7 +26,12 @@ const router = createBrowserRouter([
     element:        <RequireAuth loginPath={'/'}>
     <AddRov />
   </RequireAuth>
-  
+  },
+  {
+    path: "/EditarRov",
+    element:        <RequireAuth loginPath={'/'}>
+    <EditarRov />
+  </RequireAuth>
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(

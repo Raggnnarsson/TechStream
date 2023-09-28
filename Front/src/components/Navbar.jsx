@@ -41,7 +41,8 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
-                    <a className="dropdown-item">Editar Rov</a>
+                    <Link className="dropdown-item" to="/EditarRov">
+                      Editar Rov</Link>
                   </li>
                 </ul>
               </div>
@@ -64,12 +65,7 @@ export default function Navbar() {
                   </li>
                   <li>
                     <a className="dropdown-item" href="#">
-                      Editar Rov
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Eliminar
+                      Eliminar Piloto
                     </a>
                   </li>
                 </ul>

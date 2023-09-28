@@ -107,7 +107,7 @@ export default function Form() {
                     <div className="d-grid gap-2 pt-4">
                       <motion.div
                         className="box"
-                        whileHover={{ scale: [null, 1.1, 1.1] }}
+                        whileHover={{ scale: [null, 1.03, 1.03] }}
                         transition={{ duration: 0.3 }}
                       >
                         <button className="btn btn-primary w-100" type="submit">

@@ -48,8 +48,8 @@ function HomeAdm() {
       <div className="containergeneraladd">
         <Particle/>
         <div className="position-absolute z-index-1000">
-          <h1 className="pt-5 text-center text-primary">Reporte Rov</h1>
-          <h1 className="text-light text-center">{auth().nombre} </h1>
+          <h1 className="pt-5 text-center text-white">Reporte Rov</h1>
+          <h2 className="text-light text-center">{auth().nombre} </h2>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -60,10 +60,9 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text">
-              <h1 className="text-white">Rovs disponibles</h1>
+              <h3 className="text-white">Rovs disponibles</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
-                  x
                   <tr>
                     <th scope="col">Id ROV</th>
                     <th scope="col">Estado del rov</th>
@@ -121,7 +120,7 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text">
-              <h1 className="text-white">Rovs pendientes o en mantención</h1>
+              <h3 className="text-white">Rovs pendientes o en mantención</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
                   <tr>
@@ -182,7 +181,7 @@ function HomeAdm() {
             }}
           >
             <div id="example-collapse-text bg-dark">
-              <h1 className="text-white">Rovs en planta</h1>
+              <h3 className="text-white">Rovs en planta</h3>
               <table className="table table-dark table-bordered mx-auto">
                 <thead>
                   <tr>
