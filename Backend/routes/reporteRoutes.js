@@ -56,7 +56,7 @@ router.put('/editarReporte/:id', (req, res) => {
     }
   }
 
-  // Eliminar la coma adicional y agregar la cláusula WHERE
+ 
   sql = sql.slice(0, -2);
   sql += ' WHERE idRov = ?';
   valores.push(reporteId);
