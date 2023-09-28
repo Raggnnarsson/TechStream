@@ -5,6 +5,8 @@ import { useSignOut, useAuthUser } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import Particle from "../components/Particle";
+import ParticlesBackground from "../components/Particle";
 function HomeAdm() {
   //instanciando funcion que nos elimina las cookies para desloguearnos
   const signOut = useSignOut();
@@ -42,202 +44,205 @@ function HomeAdm() {
   }
   return (
     <>
-      <div className="bg-dark vh-full">
-        <Navbar></Navbar>
-        <h1 className="pt-5 text-center text-primary">Reporte Rov</h1>
-        <h1 className="text-light text-center">{auth().nombre} </h1>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1,
-            delay: 0.2,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-        >
-          <div id="example-collapse-text">
-            <h1 className="text-white">Rovs disponibles</h1>
-            <table className="table table-dark table-bordered mx-auto">
-              <thead>
-                x
-                <tr>
-                  <th scope="col">Id ROV</th>
-                  <th scope="col">Estado del rov</th>
-                  <th scope="col">Salmonera</th>
-                  <th scope="col">Ubicación</th>
-                  <th scope="col">Piloto</th>
-                  <th scope="col">Fecha de ingreso</th>
-                  <th scope="col">Fecha de salida</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportes.map((reporte, index) =>
-                  reporte.tipoEstado === "Disponible" ? (
-                    <>
-                      <tr>
-                        <td key={index} scope="col">
-                          {reporte.idRov}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.tipoEstado}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombreSalmonera}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.centro}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombre}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaIngreso}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaSalida}
-                        </td>
-                      </tr>
-                    </>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </tbody>
-            </table>
+      <div className="containergeneraladd">
+        <Particle />
+        <div className="bg-dark vh-full">
+          <Navbar></Navbar>
+          <h1 className="pt-5 text-center text-primary">Reporte Rov</h1>
+          <h1 className="text-light text-center">{auth().nombre} </h1>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
+            <div id="example-collapse-text">
+              <h1 className="text-white">Rovs disponibles</h1>
+              <table className="table table-dark table-bordered mx-auto">
+                <thead>
+                  x
+                  <tr>
+                    <th scope="col">Id ROV</th>
+                    <th scope="col">Estado del rov</th>
+                    <th scope="col">Salmonera</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Piloto</th>
+                    <th scope="col">Fecha de ingreso</th>
+                    <th scope="col">Fecha de salida</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportes.map((reporte, index) =>
+                    reporte.tipoEstado === "Disponible" ? (
+                      <>
+                        <tr>
+                          <td key={index} scope="col">
+                            {reporte.idRov}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.tipoEstado}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombreSalmonera}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.centro}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombre}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaIngreso}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaSalida}
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+          <div className="d-flex justify-content-center">
+            <ButtonModal />
           </div>
-        </motion.div>
-        <div className="d-flex justify-content-center">
-          <ButtonModal />
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1,
-            delay: 0.2,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-        >
-          <div id="example-collapse-text">
-            <h1 className="text-white">Rovs pendientes o en mantención</h1>
-            <table className="table table-dark table-bordered mx-auto">
-              <thead>
-                <tr>
-                  <th scope="col">Id ROV</th>
-                  <th scope="col">Estado del rov</th>
-                  <th scope="col">Salmonera</th>
-                  <th scope="col">Ubicación</th>
-                  <th scope="col">Piloto</th>
-                  <th scope="col">Fecha de ingreso</th>
-                  <th scope="col">Fecha de salida</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportes.map((reporte, index) =>
-                  reporte.tipoEstado === "Pendiente" ||
-                  reporte.tipoEstado === "En Mantención" ? (
-                    <>
-                      <tr>
-                        <td key={index} scope="col">
-                          {reporte.idRov}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.tipoEstado}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombreSalmonera}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.centro}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombre}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaIngreso}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaSalida}
-                        </td>
-                      </tr>
-                    </>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </tbody>
-            </table>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
+            <div id="example-collapse-text">
+              <h1 className="text-white">Rovs pendientes o en mantención</h1>
+              <table className="table table-dark table-bordered mx-auto">
+                <thead>
+                  <tr>
+                    <th scope="col">Id ROV</th>
+                    <th scope="col">Estado del rov</th>
+                    <th scope="col">Salmonera</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Piloto</th>
+                    <th scope="col">Fecha de ingreso</th>
+                    <th scope="col">Fecha de salida</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportes.map((reporte, index) =>
+                    reporte.tipoEstado === "Pendiente" ||
+                    reporte.tipoEstado === "En Mantención" ? (
+                      <>
+                        <tr>
+                          <td key={index} scope="col">
+                            {reporte.idRov}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.tipoEstado}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombreSalmonera}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.centro}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombre}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaIngreso}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaSalida}
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+          <div className="d-flex justify-content-center">
+            <ButtonModal />
           </div>
-        </motion.div>
-        <div className="d-flex justify-content-center">
-          <ButtonModal />
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1,
-            delay: 0.2,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-        >
-          <div id="example-collapse-text bg-dark">
-            <h1 className="text-white">Rovs en planta</h1>
-            <table className="table table-dark table-bordered mx-auto">
-              <thead>
-                <tr>
-                  <th scope="col">Id ROV</th>
-                  <th scope="col">Estado del rov</th>
-                  <th scope="col">Salmonera</th>
-                  <th scope="col">Ubicación</th>
-                  <th scope="col">Piloto</th>
-                  <th scope="col">Fecha de ingreso</th>
-                  <th scope="col">Fecha de salida</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportes.map((reporte, index) =>
-                  reporte.tipoEstado === "En planta" ? (
-                    <>
-                      <tr>
-                        <td key={index} scope="col">
-                          {reporte.idRov}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.tipoEstado}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombreSalmonera}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.centro}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.nombre}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaIngreso}
-                        </td>
-                        <td key={index} scope="col">
-                          {reporte.fechaSalida}
-                        </td>
-                      </tr>
-                    </>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </tbody>
-            </table>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1,
+              delay: 0.2,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
+            <div id="example-collapse-text bg-dark">
+              <h1 className="text-white">Rovs en planta</h1>
+              <table className="table table-dark table-bordered mx-auto">
+                <thead>
+                  <tr>
+                    <th scope="col">Id ROV</th>
+                    <th scope="col">Estado del rov</th>
+                    <th scope="col">Salmonera</th>
+                    <th scope="col">Ubicación</th>
+                    <th scope="col">Piloto</th>
+                    <th scope="col">Fecha de ingreso</th>
+                    <th scope="col">Fecha de salida</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reportes.map((reporte, index) =>
+                    reporte.tipoEstado === "En planta" ? (
+                      <>
+                        <tr>
+                          <td key={index} scope="col">
+                            {reporte.idRov}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.tipoEstado}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombreSalmonera}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.centro}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.nombre}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaIngreso}
+                          </td>
+                          <td key={index} scope="col">
+                            {reporte.fechaSalida}
+                          </td>
+                        </tr>
+                      </>
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+          <div className="d-flex  justify-content-center">
+            <ButtonModal />
+            <button className="btn btn-danger" onClick={logout}>
+              Cerrar Sesión
+            </button>
           </div>
-        </motion.div>
-        <div className="d-flex  justify-content-center">
-          <ButtonModal />
-          <button className="btn btn-danger" onClick={logout}>
-            Cerrar Sesión
-          </button>
         </div>
       </div>
     </>
