@@ -6,7 +6,8 @@ import Navbar from "../components/Navbar";
 import "./EditarRov.css";
 
 function EditarRov(props) {
-  const idReporte=props.idReporte;
+  console.log(props)
+  const idReporte=props.idReportee
   const [salmoneras, setSalmoneras] = useState([]);
   const [rovs, setRovs] = useState([]);
   const [pilotos, setPilotos] = useState([]);
@@ -61,6 +62,7 @@ function EditarRov(props) {
     setReporte(response.data);
   }*/
   async function getRovs() {
+    console.log(idReporte)
     const response = await axios.get("http://localhost:3000/crearRov");
     setRovs(response.data);
     const responseSalmonera = await axios.get(

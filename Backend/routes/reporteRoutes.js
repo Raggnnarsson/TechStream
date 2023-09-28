@@ -8,7 +8,6 @@ router.get("/", (req, res) => {
       ROV.idRov,
       Rov.tipoEstado,
       Salmonera.nombreSalmonera,
-      Salmonera.centro,
       Piloto.nombre,
       Reportes.fechaIngreso,
       Reportes.fechaSalida

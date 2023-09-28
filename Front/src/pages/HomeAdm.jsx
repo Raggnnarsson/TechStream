@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef  } from "react";
 import Navbar from "../components/Navbar";
 import { useSignOut, useAuthUser } from "react-auth-kit";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ function HomeAdm() {
   const [reportes, setReportes] = useState([]);
   //estado donde se guarda si los reportes de los reportes se cargaron o no
   const [loading, setLoading] = useState(true);
-  const [idReporte,setIdReporte]=useState("");
+  const idReporte=useRef(1);
   const [clickReporte,setClickReporte]=useState(false);
   //Funcion que desloguea y redirige
   const logout = () => {
@@ -45,17 +45,14 @@ function HomeAdm() {
       </div>
     );
   }
-  if(clickReporte){
-    return(<><EditarRov idReporte={idReporte}></EditarRov></>)
-  }
-  
   return (
     <>
+    <div className={(clickReporte)?"noview":"view"}>
       <Navbar></Navbar>
       <div className="containergeneraladd pt-4">
         <div className="position-flex">
           <h1 className="pt-5 text-center text-dark">Reporte Rov</h1>
-          <h2 className="text-light text-center">{auth().nombre} </h2>
+          <h2 className="text-dark text-center">{auth().nombre} </h2>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -103,9 +100,10 @@ function HomeAdm() {
                             {reporte.fechaIngreso}
                           </td>
                           <td key={index} scope="col">
+                          <button onClick={()=>{idReporte.current.value=reporte.idReporte;setClickReporte(true)}} >{idReporte.current.value}</button>
                           </td>
                         </tr>
-                            <button onClick={()=>{setIdReporte(reporte.idReporte);setClickReporte(true)}} >editar</button>
+
                       </>
                     ) : (
                       <></>
@@ -243,6 +241,7 @@ function HomeAdm() {
           </div>
         </div>
       </div>
+    </div>
     </>
   );
 }
