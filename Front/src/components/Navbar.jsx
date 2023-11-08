@@ -1,81 +1,98 @@
 import "./navbar.css";
 import { Link } from "react-router-dom";
-export default function Navbar() {
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { useAuthUser } from "react-auth-kit";
+function NavbarDarkExample() {
+  const auth = useAuthUser();
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top pb-20">
+    <Navbar variant="dark" bg="dark" expand="lg">
+      <Container fluid>
         <div className="contenedor-logo">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/">
             <img
               src="./public/Logo/logo-removebg-preview.png"
               width="40"
               height="auto"
               alt=""
             />
-          </a>
-          <a className="navbar-brand" href="#">
             TechStream
           </a>
         </div>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+
+        <Navbar.Toggle aria-controls="navbar-dark-example" />
+        <Navbar.Collapse id="navbar-dark-example">
+          <Nav className="mr-auto">
             <li className="nav-item">
-              <Link to="/admin" className="nav-link">
+              <Link to="/" className="nav-link text-light">
                 Inicio
               </Link>
             </li>
-            <li>
-              <div className="dropdown">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  ROV
-                </button>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link className="dropdown-item" to="/addRov">
-                      Agregar Rov
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/EditarRov">
-                      Editar Rov</Link>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li>
-              <div className="dropdown">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Pilotos
-                </button>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Agregar Piloto
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Eliminar Piloto
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div className="collapse navbar-collapse" id="navbarNav"></div>
-      </nav>
-    </div>
+            {auth().nombre === "Taller" || auth().nombre === "Administrador" ? (
+              <>
+                <li>
+                  <Link className="nav-link text-light" to="/addRov">
+                    Agregar Rov
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+            {auth().nombre === "Logística" ||
+            auth().nombre === "Administrador" ? (
+              <>
+                <li>
+                  <Link className="nav-link text-light" to="/addPilot">
+                    Agregar Piloto
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+            {auth().nombre === "Logística" ||
+            auth().nombre === "Administrador" ? (
+              <>
+                <li>
+                  <Link className="nav-link text-light" to="/Pilots">
+                    Ver Pilotos
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+            {auth().nombre === "Logística" ||
+            auth().nombre === "Administrador" ? (
+              <>
+                <li>
+                  <Link className="nav-link text-light" to="/CrearCentro">
+                    Crear Centro
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+            {auth().nombre === "Logística" ||
+            auth().nombre === "Administrador" ? (
+              <>
+                <li>
+                  <Link className="nav-link text-light" to="/Centros">
+                    Ver Centros
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
+
+export default NavbarDarkExample;

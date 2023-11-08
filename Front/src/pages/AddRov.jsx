@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./AddRov.css";
 import Form from "react-bootstrap/Form";
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "react-auth-kit";
 export default function AddRov() {
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     serialRov: "",
     tipoEstado: "Disponible",
@@ -17,23 +19,41 @@ export default function AddRov() {
       [name]: value,
     });
   }
+  const auth = useAuthUser();
   //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      if(formValues.serialRov===""){
+        alert("Ingrese un serial rov")
+        return
+      }
+      const responseCrearRov = await axios.post(
         "http://localhost:3000/crearRov",
         formValues
       );
-      console.log("rov creado");
+      const responseIdRov=await axios.get(`http://localhost:3000/crearRov/obtenerid/${formValues.serialRov}`)
+      const responseCrearReporte= await axios.post("http://localhost:3000/reportes/crearReporte",{idPiloto : 1, idSalmonera : 1, idRov : responseIdRov.data.idRov, reporteActivo : true, tipoEstado : "Disponible"})
+      alert("Rov Creado")
+      navigate("/admin")
     } catch (err) {
-      console.log(err);
+      if(err.response.status===409){
+        alert("Ingrese un rov que no este creado")
+      }
+
     }
+    
   }
   console.log(formValues);
+  useEffect(()=>{
+    if(auth().nombre === "Logística"){
+        navigate("/")
+    }
+  },[])
   return (
+    <>
+    <Navbar />
     <div className="containergeneraladd">
-      <Navbar />
       <div className="container-addRov">
         <div className="card">
           <div className="card-body">
@@ -51,7 +71,7 @@ export default function AddRov() {
                   name="serialRov"
                   value={formValues.serialRov}
                   onChange={handleChangeInput}
-                  placeholder="Ejemplo: 001"
+                  placeholder="Ejemplo:1"
                 />
               </Form.Group>
 
@@ -64,9 +84,6 @@ export default function AddRov() {
                   onChange={handleChangeInput}
                 >
                   <option value="Disponible">Disponible</option>
-                  <option value="En mantención">En mantención</option>
-                  <option value="En baja">En baja</option>
-                  <option value="Pendiente">Pendiente</option>
                 </Form.Select>
               </Form.Group>
               <div className="button pt-4">
@@ -79,5 +96,6 @@ export default function AddRov() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -4,3 +4,13 @@
 .noview{
     display:none;
 }
+.InputBusqueda{
+    text-align: center;
+    border-radius: 10px;
+    outline: none;
+    background-color: transparent;
+}
+.containerInput{
+    display: flex;
+    justify-content: center;   
+}

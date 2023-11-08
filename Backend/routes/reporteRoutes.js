@@ -1,33 +1,38 @@
 const express = require('express');
 const router = express.Router();
 const con = require("../dbConnection");
-
 // Define rutas para productos
-router.get("/", (req, res) => {
-    const sql = `SELECT
-      ROV.idRov,
-      Rov.tipoEstado,
-      Salmonera.nombreSalmonera,
-      Piloto.nombre,
-      Reportes.fechaIngreso,
-      Reportes.fechaSalida
-  FROM
-      ROV
-  JOIN
-      Reportes ON ROV.idRov = Reportes.idRov
-  JOIN
-      Salmonera ON Reportes.idSalmonera = Salmonera.idSalmonera
-  JOIN
-      Piloto ON Reportes.idPiloto = Piloto.idPiloto;`;
-    con.query(sql, (error, results) => {
-      if (error) {
-        console.error("Error en la consulta:", error);
-        return res.status(500).json({ error: "Error al cargar datos" });
-      }
-  
-      res.json(results);
-    });
+router.get('/reporteActivo', (req, res) => {
+  con.query('CALL sp_ObtenerReportesActivos()', (error, results) => {
+    if (error) {
+      console.error("Error en la consulta:", error);
+      return res.status(500).json({ error: "Error al cargar datos" });
+    }
+    res.json(results[0]);
   });
+});
+router.get("/", (req, res) => {
+  con.query('CALL sp_ObtenerTodosLosReportes()', (error, results, fields) => {
+    if (error) {
+      console.error("Error en la consulta:", error);
+      return res.status(500).json({ error: "Error al cargar datos" });
+    }
+
+    res.json(results[0]);
+  });
+});
+  router.get("/datosReporte/:idReporte", (req, res) => {
+    const idReporte = req.params.idReporte;
+    con.query('CALL sp_ObtenerDatosReporte(?)', [idReporte], (error, results, fields) => {
+        if (error) {
+            console.error("Error en la consulta:", error);
+            return res.status(500).json({ error: "Error al cargar datos" });
+        }
+
+        // El resultado generalmente viene en un arreglo de arreglos, seleccionamos el primero.
+        res.json(results[0]);
+    });
+});
 router.get("/:id",(req, res)=>{
   const elementoId = req.params.id;
   const sql = `SELECT * FROM Reportes WHERE idReporte = ${elementoId}`;
@@ -40,35 +45,53 @@ con.query(sql, (error, results) => {
   res.json(results);
 });
 });
+router.get("/datosReportes/:idRov", (req, res) => {
+  const idRov = parseInt(req.params.idRov, 10);
+  con.query('CALL sp_ObtenerDatosReportesPorRov(?)', [idRov], (error, results) => {
+      if (error) {
+          console.error("Error en la consulta:", error);
+          return res.status(500).json({ error: "Error al cargar datos" });
+      }
+
+      // Los resultados pueden venir en un array de arrays, seleccionamos el primer array.
+      res.json(results[0]);
+  });
+});
 router.put('/editarReporte/:id', (req, res) => {
-  const reporteId = req.params.id;
-  const nuevosDatos = req.body; // Supongamos que quieres editar varios atributos
+  const idReporte = parseInt(req.params.id);
+  console.log(idReporte)
+  const { idRov, idPiloto, idSalmonera, fechaIngreso, comentarioPiloto, comentarioTaller, tipoEstado, reporteActivo } = req.body;
 
-  // Construir la consulta SQL dinámica
-  let sql = 'UPDATE Reportes SET ';
-  const valores = [];
+  con.query('CALL sp_EditarReporte(?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+    [idReporte, idRov, idPiloto, idSalmonera, fechaIngreso, comentarioPiloto, comentarioTaller, tipoEstado, reporteActivo], 
+    (err, result) => {
+      if (err) {
+        console.error('Error al editar los atributos del reporte:', err);
+        return res.status(500).json({ error: 'Error al editar los atributos del reporte' });
+      }
+      console.log(`Atributos del reporte con ID ${idReporte} editados correctamente`);
+      res.json({ mensaje: `Atributos del reporte con ID ${idReporte} editados correctamente` });
+  });
+});
 
-  for (const key in nuevosDatos) {
-    if (nuevosDatos.hasOwnProperty(key)) {
-      sql += `${key} = ?, `;
-      valores.push(nuevosDatos[key]);
-    }
-  }
+//Reportes finalizados
 
- 
-  sql = sql.slice(0, -2);
-  sql += ' WHERE idRov = ?';
-  valores.push(reporteId);
+router.post('/crearReporte', (req, res) => {
+  const { idSalmonera, idRov, tipoEstado, idPiloto, comentarioPiloto, comentarioTaller, fechaIngreso } = req.body;
 
-  // Realizar la actualización en la base de datos
-  con.query(sql, valores, (err, result) => {
-    if (err) {
-      console.error('Error al editar los atributos:', err);
-      res.status(500).json({ error: 'Error al editar los atributos' });
-      return;
-    }
-    console.log(`Atributos del reporte con ID ${reporteId} editados correctamente`);
-    res.json({ mensaje: `Atributos del reporte con ID ${reporteId} editados correctamente` });
+  // Aquí debes asegurarte de que los datos recibidos son los esperados y están en el formato correcto antes de pasarlos al Stored Procedure.
+  
+  con.query('CALL sp_CrearReporte(?, ?, ?, ?, ?, ?, ?)', 
+    [idSalmonera, idRov, tipoEstado, idPiloto, comentarioPiloto, comentarioTaller, fechaIngreso], 
+    (err, results) => {
+      if (err) {
+        console.error('Error al insertar el reporte:', err);
+        return res.status(500).json({ error: 'Error interno del servidor' });
+      }
+
+      console.log('Reporte creado con éxito.');
+      // Podrías querer devolver el ID del reporte creado, si tu Stored Procedure está configurado para hacerlo.
+      res.status(201).json({ mensaje: 'Reporte creado con éxito.', idReporteCreado: results.insertId });
   });
 });
 
