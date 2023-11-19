@@ -8,9 +8,10 @@ const reportesRoutes = require('./routes/reporteRoutes');
 const rovRoutes = require('./routes/rovRoutes');
 const salmoneraRoutes = require("./routes/salmoneraRoutes")
 const pilotoRoutes = require("./routes/pilotoRoutes")
+require('dotenv').config();
 app.use(
   cors({
-    origin: "http://localhost:5173", // Cambia esto al puerto que desees
+    origin: process.env.FRONT_DOMAIN, // Cambia esto al puerto que desees
   })
 );
 app.use(express.json());

@@ -44,7 +44,7 @@ console.log(reportes)
                               {reporte.nombre}
                             </td>
                             <td  scope="col">
-                              {reporte.fechaIngreso}
+                            {(reporte.fechaIngreso) ? new Date(reporte.fechaIngreso).toISOString().split("T")[0]:"Sin Asignar"}
                             </td>
                           </tr>
                         </>

@@ -159,7 +159,11 @@ function HomeAdm() {
 
             {auth().nombre === "Administrador" ? (
               <>
-                <button className="btn btn-primary" href="/Allreports">
+                
+                <button className="btn btn-primary" onClick={()=>{
+                  navigate("/Allreports")
+                }
+                } >
                   Ver reportes
                 </button>
               </>

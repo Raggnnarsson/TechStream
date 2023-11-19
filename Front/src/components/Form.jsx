@@ -25,6 +25,11 @@ export default function Form() {
     // Resetea el estado de error cuando el usuario cambia la contraseña
     setPasswordError("");
   }
+  const handleEnterPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   //nombre:ID CONTRASEÑA:
   async function handleSubmit(e) {
     e.preventDefault();
